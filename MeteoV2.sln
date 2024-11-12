@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35027.167
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeteoV2", "MeteoV2\MeteoV2.csproj", "{2AADDE19-99DB-4971-AE23-159614CEAF32}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2AADDE19-99DB-4971-AE23-159614CEAF32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2AADDE19-99DB-4971-AE23-159614CEAF32}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2AADDE19-99DB-4971-AE23-159614CEAF32}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2AADDE19-99DB-4971-AE23-159614CEAF32}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3476D748-CC2F-46AB-B96C-57037E7342DF}
+	EndGlobalSection
+EndGlobal
