@@ -6,7 +6,12 @@
         xmlns:local="clr-namespace:MeteoV2"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-
-    </Grid>
+	<Grid>
+		<StackPanel Margin="20">
+			<TextBlock FontSize="24" FontWeight="Bold" Text="Météo actuelle à Annecy" HorizontalAlignment="Center"/>
+			<TextBlock x:Name="TemperatureText" FontSize="18" Margin="0,20,0,10" HorizontalAlignment="Center"/>
+			<TextBlock x:Name="ConditionsText" FontSize="18" HorizontalAlignment="Center"/>
+			<Button Content="Actualiser" Width="100" Margin="0,20,0,0" Click="RefreshButton_Click"/>
+		</StackPanel>
+	</Grid>
 </Window>
