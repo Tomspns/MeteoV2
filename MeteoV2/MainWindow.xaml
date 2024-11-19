@@ -7,11 +7,29 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
 	<Grid>
+
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="3*"/>
+			<ColumnDefinition Width="5*"/>
+		</Grid.ColumnDefinitions>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="2*"/>
+			<RowDefinition Height="*"/>
+		</Grid.RowDefinitions>
+
+		<Border Background="#2f5cb6"/>
+		<Border Grid.Column ="1" Background="#1f3d7a"/>
+		<Border Grid.Row="1" Grid.ColumnSpan="2" Background="#152951"/>
+		
 		<StackPanel Margin="20">
-			<TextBlock FontSize="24" FontWeight="Bold" Text="Météo actuelle à Annecy" HorizontalAlignment="Center"/>
+			<TextBlock FontSize="20" FontWeight="Bold" Text="Météo actuelle à Annecy" HorizontalAlignment="Center"/>
 			<TextBlock x:Name="TemperatureText" FontSize="18" Margin="0,20,0,10" HorizontalAlignment="Center"/>
 			<TextBlock x:Name="ConditionsText" FontSize="18" HorizontalAlignment="Center"/>
 			<Button Content="Actualiser" Width="100" Margin="0,20,0,0" Click="RefreshButton_Click"/>
 		</StackPanel>
+
 	</Grid>
+
+	
+	
 </Window>

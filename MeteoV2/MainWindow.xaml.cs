@@ -8,10 +8,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using System;
+
 using System.Net.Http;
-using System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 
 namespace MeteoV2
 {
@@ -20,46 +19,111 @@ namespace MeteoV2
     /// </summary>
     public partial class MainWindow : Window
     {
-        private static readonly HttpClient client = new HttpClient();
-        private const string apiKey = "16a01e77b1d33e51fa848496f1e5c5a6"; // Remplacez par votre clé API
-        private const string city = "Annecy";
-        private const string country = "FR";
-
         public MainWindow()
         {
             InitializeComponent();
             RefreshWeather();
         }
 
-        private async void RefreshWeather()
+        private async void RefreshButton_Click(object sender, RoutedEventArgs e)
+        {
+            await RefreshWeather();
+        }
+
+        private async Task RefreshWeather()
         {
             try
             {
-                var weatherData = await GetWeatherDataAsync();
-                TemperatureText.Text = $"Température: {weatherData.Item1} °C";
-                ConditionsText.Text = $"Conditions: {weatherData.Item2}";
+                HttpClient client = new HttpClient();
+                HttpResponseMessage response = await client.GetAsync("https://api.openweathermap.org/data/2.5/weather?q=annecy,fr&appid=c21a75b667d6f7abb81f118dcf8d4611&units=metric");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string content = await response.Content.ReadAsStringAsync();
+                    Root data = JsonConvert.DeserializeObject<Root>(content);
+
+                    TemperatureText.Text = $"{data.main.temp:0.0}°C";
+                    ConditionsText.Text = data.weather[0].description;
+                }
+                else
+                {
+                    TemperatureText.Text = "Erreur lors de la récupération des données";
+                    ConditionsText.Text = string.Empty;
+                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Erreur: {ex.Message}");
+                TemperatureText.Text = "Erreur lors de la récupération des données";
+                ConditionsText.Text = string.Empty;
+                MessageBox.Show($"Une erreur s'est produite : {ex.Message}");
             }
         }
-
-        private async Task<Tuple<double, string>> GetWeatherDataAsync()
-        {
-            string url = $"https://api.openweathermap.org/data/2.5/weather?q={city},{country}&appid={apiKey}&units=metric";
-            var response = await client.GetStringAsync(url);
-            var data = JObject.Parse(response);
-
-            double temperature = data["main"]["temp"].ToObject<double>();
-            string conditions = data["weather"][0]["description"].ToString();
-
-            return Tuple.Create(temperature, conditions);
-        }
-
-        private void RefreshButton_Click(object sender, RoutedEventArgs e)
-        {
-            RefreshWeather();
-        }
     }
+
+
+    // Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse);
+    public class Clouds
+    {
+        public int all { get; set; }
+    }
+
+    public class Coord
+    {
+        public double lon { get; set; }
+        public double lat { get; set; }
+    }
+
+    public class Main
+    {
+        public double temp { get; set; }
+        public double feels_like { get; set; }
+        public double temp_min { get; set; }
+        public double temp_max { get; set; }
+        public int pressure { get; set; }
+        public int humidity { get; set; }
+        public int sea_level { get; set; }
+        public int grnd_level { get; set; }
+    }
+
+    public class Root
+    {
+        public Coord coord { get; set; }
+        public List<Weather> weather { get; set; }
+        public string @base { get; set; }
+        public Main main { get; set; }
+        public int visibility { get; set; }
+        public Wind wind { get; set; }
+        public Clouds clouds { get; set; }
+        public int dt { get; set; }
+        public Sys sys { get; set; }
+        public int timezone { get; set; }
+        public int id { get; set; }
+        public string name { get; set; }
+        public int cod { get; set; }
+    }
+
+    public class Sys
+    {
+        public int type { get; set; }
+        public int id { get; set; }
+        public string country { get; set; }
+        public int sunrise { get; set; }
+        public int sunset { get; set; }
+    }
+
+    public class Weather
+    {
+        public int id { get; set; }
+        public string main { get; set; }
+        public string description { get; set; }
+        public string icon { get; set; }
+    }
+
+    public class Wind
+    {
+        public double speed { get; set; }
+        public int deg { get; set; }
+    }
+
+
 }
